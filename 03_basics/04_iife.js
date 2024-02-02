@@ -7,7 +7,7 @@
 (function chai(){
     // named IIFE
     console.log(`DB CONNECTED`);
-})();
+})(); // we have used ; over here as witout this JS will not know where this iife ends
 
 ( (name) => {
     console.log(`DB CONNECTED TWO ${name}`);
