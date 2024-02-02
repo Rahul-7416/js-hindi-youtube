@@ -10,6 +10,7 @@
 const month = "march"
 
 switch (month) {
+        // to duplicate the elements, select the code then press (shift+alt+down_arrow)
     case "jan":
         console.log("January");
         break;
