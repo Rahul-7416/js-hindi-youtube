@@ -13,17 +13,57 @@
 4	DONE	The operation is complete.
 </body>
 <script>
-    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', requestUrl)
-    xhr.onreadystatechange = function(){
-        console.log(xhr.readyState);
-        if (xhr.readyState === 4) {
-            const data = JSON.parse(this.responseText)
-            console.log(typeof data);
-            console.log(data.followers);
-        }
+    // console.log('done');
+
+// AJAX Request
+
+const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+const xhr = new XMLHttpRequest();  // XMLHttpRequest is a method, and it's a class, so we have used new keyword to make an object of this class
+xhr.open('GET', requestUrl);
+xhr.send();
+let data;
+let dp;
+xhr.onreadystatechange = function fetchData() {
+    console.log(xhr.readyState);
+    if(xhr.readyState === 4) {
+        data = JSON.parse(this.responseText);
+        processData();
     }
-    xhr.send();
+}
+
+function processData() {
+    const div = document.createElement('div');
+    const img = document.createElement('img');
+    const followersCount = document.createElement('p');
+    img.src = data.avatar_url;
+    img.classList.add('img');
+    followersCount.innerText = data.followers;
+    document.body.appendChild(div).appendChild(img);
+    div.appendChild(followersCount);
+}
+
+// Doubt Section: Solved and cleared by chatGpt
+
+// Q. but why we are calling the processData function only when the readystate === 4, why can't we console.log(data) in the global scope ?
+
+// ANSWER:
+
+// The reason for checking `xhr.readyState === 4` before accessing and processing the data is related to the asynchronous nature of the XMLHttpRequest. The `readyState` property represents the state of the request, and it goes through multiple stages before reaching the final state of 4, which indicates that the operation is complete.
+
+// Here's what each `readyState` value represents:
+
+// - `0`: `UNSENT` - The request has not been opened.
+// - `1`: `OPENED` - The request has been opened but has not been sent.
+// - `2`: `HEADERS_RECEIVED` - The request has been sent, and headers and status are available.
+// - `3`: `LOADING` - The response is being received (partial data).
+// - `4`: `DONE` - The operation is complete.
+
+// When you check `xhr.readyState === 4`, you ensure that the XMLHttpRequest has reached its final state (`DONE`). This is crucial because it guarantees that the response has been fully received, and you can safely access and process the data.
+
+// If you were to log `data` in the global scope without checking the `readyState`, it might lead to issues because the code would attempt to access `data` before the asynchronous operation is complete. The `onreadystatechange` event is triggered multiple times as the request progresses through its different states. By checking for `readyState === 4`, you ensure that the data is only accessed and processed when it's fully available.
+
+// In summary, it's a best practice to wait for the `readyState` to be `4` before working with the data received from the server, ensuring that the asynchronous operation has completed successfully.
+
+
 </script>
 </html>
