@@ -36,7 +36,15 @@ function User(username, loginCount, isLoggedIn){
 // Also, it will give you all the other details present in the global context
 // So, to avoid this we use the new keyword 
 // new keyword creates a new instance of this object, not affecting the original this object, so now we get a this object that only contains the value we used in the constructor function 
+
+// or understand it in steps:
+// Step 1: When we use "new" keyword, it creates a new object called as instance
+// Step 2: Constructor function is called because of this new keyword, This constructor function set the values of all the variables 
+// Step 3: Now all the variables are inserted into this object
+// Step 4: We get our object/function.
 const userOne = new User("hitesh", 12, true)
 const userTwo = new User("ChaiAurCode", 11, false)
 console.log(userOne.constructor);
+
+
 //console.log(userTwo);
